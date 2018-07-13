@@ -938,7 +938,7 @@ define([
             } else if (gitHost === this.gitLabString) {
                 // Check access token with GitLab
                 var gitlab = this.gitLabApi({
-                    url: this._getOriginFromUrlObject(gitRepositoryUrl),
+                    url: this._formatUrlWithProxy(this._getOriginFromUrlObject(gitRepositoryUrl)),
                     token: accessToken
                 });
                 gitlab.users.current().then(function (response) {

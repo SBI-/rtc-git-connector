@@ -144,7 +144,7 @@ define([
                     var renderedTemplate = new TemplateService()
                         .renderTemplateWithWorkItem(templateString, workItem);
 
-                    gitlab.projects.issues.create(giturl.joined, {
+                    gitlab.projects.issues.create(encodeURIComponent(giturl.joined), {
                         title: workItem.object.attributes.summary.content,
                         description: renderedTemplate,
                         labels: tags
@@ -320,7 +320,7 @@ define([
         addBackLinksToGitLabCommits: function (gitlab, path, sha, commentBody) {
             var deferred = new Deferred();
 
-            gitlab.projects.repository.commits.comments.create(path, sha, commentBody).then(function (response) {
+            gitlab.projects.repository.commits.comments.create(encodeURIComponent(path), sha, commentBody).then(function (response) {
                 deferred.resolve(response);
             }, function (error) {
                 deferred.reject("Couldn't add a comment to the GitLab commit. Error: " + (error.error.message || error.error));
@@ -332,7 +332,7 @@ define([
         addBackLinksToGitLabIssues: function (gitlab, path, id, commentBody) {
             var deferred = new Deferred();
 
-            gitlab.projects.issues.notes.create(path, id, {
+            gitlab.projects.issues.notes.create(encodeURIComponent(path), id, {
                 body: commentBody
             }).then(function (response) {
                 deferred.resolve(response);
@@ -346,7 +346,7 @@ define([
         addBackLinksToGitLabRequests: function (gitlab, path, id, commentBody) {
             var deferred = new Deferred();
 
-            gitlab.projects.mergeRequests.notes.create(path, id, {
+            gitlab.projects.mergeRequests.notes.create(encodeURIComponent(path), id, {
                 body: commentBody
             }).then(function (response) {
                 deferred.resolve(response);
@@ -418,7 +418,7 @@ define([
             if (giturl.parts.length < 2) {
                 deferred.reject("Invalid repository URL.");
             } else {
-                gitlab.projects.repository.commits.show(giturl.joined, commitSha).then(function (response) {
+                gitlab.projects.repository.commits.show(encodeURIComponent(giturl.joined), commitSha).then(function (response) {
                     var commitUrlPath = giturl.repo + "/commit/";
                     var convertedCommits = [];
                     convertedCommits.push(CommitModel.CreateFromGitLabCommit(response, commitUrlPath, alreadyLinkedUrls));
@@ -495,7 +495,7 @@ define([
             if (giturl.parts.length < 2) {
                 deferred.reject("Invalid repository URL.");
             } else {
-                gitlab.projects.issues.show(giturl.joined, issueId).then(function (response) {
+                gitlab.projects.issues.show(encodeURIComponent(giturl.joined), issueId).then(function (response) {
                     var convertedIssues = [];
                     convertedIssues.push(IssueModel.CreateFromGitLabIssue(response, alreadyLinkedUrls));
                     deferred.resolve(convertedIssues);
@@ -568,7 +568,7 @@ define([
             if (giturl.parts.length < 2) {
                 deferred.reject("Invalid repository URL.");
             } else {
-                gitlab.projects.mergeRequests.show(giturl.joined, requestId).then(function (response) {
+                gitlab.projects.mergeRequests.show(encodeURIComponent(giturl.joined), requestId).then(function (response) {
                     var convertedRequests = [];
                     convertedRequests.push(RequestModel.CreateFromGitLabRequest(response, alreadyLinkedUrls));
                     deferred.resolve(convertedRequests);
@@ -667,7 +667,7 @@ define([
             if (giturl.parts.length < 2) {
                 deferred.reject("Invalid repository URL.");
             } else {
-                gitlab.Commits.all(giturl.joined, {
+                gitlab.projects.repository.commits.all(encodeURIComponent(giturl.joined), {
                     max_pages: 1,
                     per_page: 100
                 }).then(function (response) {
@@ -754,7 +754,7 @@ define([
             if (giturl.parts.length < 2) {
                 deferred.reject("Invalid repository URL.");
             } else {
-                gitlab.projects.issues.all(giturl.joined, {
+                gitlab.projects.issues.all(encodeURIComponent(giturl.joined), {
                     max_pages: 1,
                     per_page: 100
                 }).then(function (response) {
@@ -848,7 +848,7 @@ define([
             if (giturl.parts.length < 2) {
                 deferred.reject("Invalid repository URL.");
             } else {
-                gitlab.projects.mergeRequests.all(giturl.joined, {
+                gitlab.projects.mergeRequests.all(encodeURIComponent(giturl.joined), {
                     max_pages: 1,
                     per_page: 100
                 }).then(function (response) {

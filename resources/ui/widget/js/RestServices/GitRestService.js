@@ -970,6 +970,11 @@ define([
             return url.scheme + "://" + url.host + (url.port ? ":" + url.port : "");
         },
 
+        _formatUrlWithProxy: function (url) {
+            var proxyUrl = new URL(net.jazz.ajax._contextRoot + "/proxy?uri=", window.location.origin);
+            return proxyUrl.href + encodeURIComponent(url);
+        }
+
         // Remove the ".git" suffix from the repository name if present
         _removeDotGitEnding: function (repositoryName) {
             return repositoryName.replace(/\.git$/, '');

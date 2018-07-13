@@ -29,6 +29,9 @@ define([
                 this.gitHubApi = com_siemens_bt_jazz_rtcgitconnector_modules.GitHubApi;
                 this.gitLabApi = com_siemens_bt_jazz_rtcgitconnector_modules.GitLabApi;
             }
+
+            console.log(this.gitHubApi);
+            console.log(this.gitLabApi);
         },
 
         createNewIssue: function (selectedGitRepository, gitHost, accessToken, workItem) {
@@ -168,15 +171,20 @@ define([
             console.log('getGitLabIssueTemplate');
             var deferred = new Deferred();
             var filePath = ".gitlab/issue_templates/" + this.issueTemplateName;
+            var url = "projects/" + encodeURIComponent(projectId) +
+                "/repository/files/" + encodeURIComponent(filePath) + "/raw?ref=master";
 
-            gitlab.projects.repository.files.showRaw(projectId, filePath, "master").then(function (response) {
+            // Use the get function directly instead of the "projects.repository.files.showRaw" function
+            // This is a workaround so that the jazz proxy correctly sends the "ref" parameter as a
+            // query parameter
+            gitlab.get(encodeURIComponent(url), {}).then(function (response) {
                 deferred.resolve(response);
             }, function (error) {
                 deferred.reject("Couldn't get the issue template from GitLab. Error: " + (error.message || error));
             });
 
             return deferred.promise;
-        },
+            },
 
         addBackLinksToGitHost: function (params) {
             console.log('addBackLinksToGitHost');

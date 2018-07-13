@@ -943,7 +943,7 @@ define([
                     url: this._getOriginFromUrlObject(gitRepositoryUrl),
                     token: accessToken
                 });
-                gitlab.Users.current().then(function (response) {
+                gitlab.users.current().then(function (response) {
                     if (response) deferred.resolve(true);
                     else deferred.resolve(false);
                 }, function (error) {
@@ -964,7 +964,7 @@ define([
         _formatUrlWithProxy: function (url) {
             var proxyUrl = new URL(net.jazz.ajax._contextRoot + "/proxy?uri=", window.location.origin);
             return proxyUrl.href + encodeURIComponent(url);
-        }
+        },
 
         // Remove the ".git" suffix from the repository name if present
         _removeDotGitEnding: function (repositoryName) {

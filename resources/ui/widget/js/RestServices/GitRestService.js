@@ -124,8 +124,7 @@ define([
 
             var gitlab = new this.gitLabApi({
                 url: giturl.origin,
-                token: accessToken,
-                useXMLHttpRequest: true
+                token: accessToken
             });
 
             if (giturl.parts.length < 2) {
@@ -281,8 +280,7 @@ define([
 
             var gitlab = new this.gitLabApi({
                 url: giturl.origin,
-                token: params.accessToken,
-                useXMLHttpRequest: true
+                token: params.accessToken
             });
 
             var commentBody = "was linked by [RTC Work Item " + params.workItem.object.id + "]" +
@@ -414,8 +412,7 @@ define([
 
             var gitlab = new this.gitLabApi({
                 url: giturl.origin,
-                token: accessToken,
-                useXMLHttpRequest: true
+                token: accessToken
             });
 
             if (giturl.parts.length < 2) {
@@ -492,8 +489,7 @@ define([
 
             var gitlab = new this.gitLabApi({
                 url: giturl.origin,
-                token: accessToken,
-                useXMLHttpRequest: true
+                token: accessToken
             });
 
             if (giturl.parts.length < 2) {
@@ -566,8 +562,7 @@ define([
 
             var gitlab = new this.gitLabApi({
                 url: giturl.origin,
-                token: accessToken,
-                useXMLHttpRequest: true
+                token: accessToken
             });
 
             if (giturl.parts.length < 2) {
@@ -666,8 +661,7 @@ define([
 
             var gitlab = new this.gitLabApi({
                 url: giturl.origin,
-                token: accessToken,
-                useXMLHttpRequest: true
+                token: accessToken
             });
 
             if (giturl.parts.length < 2) {
@@ -752,8 +746,7 @@ define([
 
             var gitlab = new this.gitLabApi({
                 url: giturl.origin,
-                token: accessToken,
-                useXMLHttpRequest: true
+                token: accessToken
             });
 
             // instead of checking for validity with the length of a path, it would be nice to
@@ -850,8 +843,7 @@ define([
 
             var gitlab = new this.gitLabApi({
                 url: giturl.origin,
-                token: accessToken,
-                useXMLHttpRequest: true
+                token: accessToken
             });
 
             if (giturl.parts.length < 2) {
@@ -949,8 +941,7 @@ define([
                 // Check access token with GitLab
                 var gitlab = new this.gitLabApi({
                     url: this._getOriginFromUrlObject(gitRepositoryUrl),
-                    token: accessToken,
-                    useXMLHttpRequest: true
+                    token: accessToken
                 });
                 gitlab.Users.current().then(function (response) {
                     if (response) deferred.resolve(true);

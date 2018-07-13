@@ -123,7 +123,7 @@ define([
             tags += "from-rtc-work-item";
 
             var gitlab = this.gitLabApi({
-                url: giturl.origin,
+                url: this._formatUrlWithProxy(giturl.origin),
                 token: accessToken
             });
 
@@ -279,7 +279,7 @@ define([
             var giturl = this._createUrlInformation(params.selectedGitRepository.url);
 
             var gitlab = this.gitLabApi({
-                url: giturl.origin,
+                url: this._formatUrlWithProxy(giturl.origin),
                 token: params.accessToken
             });
 
@@ -411,7 +411,7 @@ define([
             var giturl = this._createUrlInformation(selectedGitRepository.url);
 
             var gitlab = this.gitLabApi({
-                url: giturl.origin,
+                url: this._formatUrlWithProxy(giturl.origin),
                 token: accessToken
             });
 
@@ -488,7 +488,7 @@ define([
             var giturl = this._createUrlInformation(selectedGitRepository.url);
 
             var gitlab = this.gitLabApi({
-                url: giturl.origin,
+                url: this._formatUrlWithProxy(giturl.origin),
                 token: accessToken
             });
 
@@ -561,7 +561,7 @@ define([
             var giturl = this._createUrlInformation(selectedGitRepository.url);
 
             var gitlab = this.gitLabApi({
-                url: giturl.origin,
+                url: this._formatUrlWithProxy(giturl.origin),
                 token: accessToken
             });
 
@@ -660,7 +660,7 @@ define([
             var deferred = new Deferred();
 
             var gitlab = this.gitLabApi({
-                url: giturl.origin,
+                url: this._formatUrlWithProxy(giturl.origin),
                 token: accessToken
             });
 
@@ -745,7 +745,7 @@ define([
             var deferred = new Deferred();
 
             var gitlab = this.gitLabApi({
-                url: giturl.origin,
+                url: this._formatUrlWithProxy(giturl.origin),
                 token: accessToken
             });
 
@@ -842,7 +842,7 @@ define([
             var deferred = new Deferred();
 
             var gitlab = this.gitLabApi({
-                url: giturl.origin,
+                url: this._formatUrlWithProxy(giturl.origin),
                 token: accessToken
             });
 

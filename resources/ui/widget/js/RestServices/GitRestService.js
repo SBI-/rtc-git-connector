@@ -23,6 +23,7 @@ define([
         issueTemplateName: "rtc-work-item-v1.md",
 
         constructor: function () {
+            console.log('constructor');
             // Prevent errors in Internet Explorer (dojo parse error because undefined)
             if (typeof com_siemens_bt_jazz_rtcgitconnector_modules !== 'undefined') {
                 this.gitHubApi = com_siemens_bt_jazz_rtcgitconnector_modules.GitHubApi;
@@ -31,6 +32,7 @@ define([
         },
 
         createNewIssue: function (selectedGitRepository, gitHost, accessToken, workItem) {
+            console.log('createNewIssue');
             if (gitHost === this.gitHubString) {
                 return this.createNewGitHubIssue(selectedGitRepository, accessToken, workItem);
             } else if (gitHost === this.gitLabString) {
@@ -43,6 +45,7 @@ define([
         },
 
         createNewGitHubIssue: function (selectedGitRepository, accessToken, workItem) {
+            console.log('createNewGitHubIssue');
             var deferred = new Deferred();
             var repositoryUrl = new url(selectedGitRepository.url);
             var urlParts = this._getUrlPartsFromPath(repositoryUrl.path);
@@ -94,6 +97,7 @@ define([
         },
 
         getGitHubIssueTemplate: function (github, urlParts) {
+            console.log('getGitHubIssueTemplate');
             var deferred = new Deferred();
             var filePath = ".github/ISSUE_TEMPLATE/" + this.issueTemplateName;
 
@@ -116,6 +120,7 @@ define([
         },
 
         createNewGitLabIssue: function (selectedGitRepository, accessToken, workItem) {
+            console.log('createNewGitLabIssue');
             var deferred = new Deferred();
             var giturl = this._createUrlInformation(selectedGitRepository.url);
             var tags = workItem.object.attributes.internalTags.content;
@@ -160,6 +165,7 @@ define([
         },
 
         getGitLabIssueTemplate: function (gitlab, projectId) {
+            console.log('getGitLabIssueTemplate');
             var deferred = new Deferred();
             var filePath = ".gitlab/issue_templates/" + this.issueTemplateName;
 
@@ -173,6 +179,7 @@ define([
         },
 
         addBackLinksToGitHost: function (params) {
+            console.log('addBackLinksToGitHost');
             var deferredList = null;
 
             if (params.gitHost === this.gitHubString) {
@@ -189,6 +196,7 @@ define([
         },
 
         addBackLinksToGitHub: function (params) {
+            console.log('addBackLinksToGitHub');
             var self = this;
             var deferredArray = [];
             var repositoryUrl = new url(params.selectedGitRepository.url);
@@ -236,6 +244,7 @@ define([
         },
 
         addBackLinksToGitHubCommit: function (github, owner, repo, sha, commentBody) {
+            console.log('addBackLinksToGitHubCommit');
             var deferred = new Deferred();
 
             github.repos.createCommitComment({
@@ -255,6 +264,7 @@ define([
         },
 
         addBackLinksToGitHubIssueOrRequest: function (github, owner, repo, id, commentBody) {
+            console.log('addBackLinksToGitHubIssueOrRequest');
             var deferred = new Deferred();
 
             github.issues.createComment({
@@ -274,6 +284,7 @@ define([
         },
 
         addBackLinksToGitLab: function (params) {
+            console.log('addBackLinksToGitLab');
             var self = this;
             var deferredArray = [];
             var giturl = this._createUrlInformation(params.selectedGitRepository.url);
@@ -318,6 +329,7 @@ define([
         },
 
         addBackLinksToGitLabCommits: function (gitlab, path, sha, commentBody) {
+            console.log('addBackLinksToGitLabCommits');
             var deferred = new Deferred();
 
             gitlab.projects.repository.commits.comments.create(encodeURIComponent(path), sha, commentBody).then(function (response) {
@@ -330,6 +342,7 @@ define([
         },
 
         addBackLinksToGitLabIssues: function (gitlab, path, id, commentBody) {
+            console.log('addBackLinksToGitLabIssues');
             var deferred = new Deferred();
 
             gitlab.projects.issues.notes.create(encodeURIComponent(path), id, {
@@ -344,6 +357,7 @@ define([
         },
 
         addBackLinksToGitLabRequests: function (gitlab, path, id, commentBody) {
+            console.log('addBackLinksToGitLabRequests');
             var deferred = new Deferred();
 
             gitlab.projects.mergeRequests.notes.create(encodeURIComponent(path), id, {
@@ -359,6 +373,7 @@ define([
 
         // Try to get a commit by it's SHA
         getCommitById: function (selectedGitRepository, gitHost, accessToken, commitSha, alreadyLinkedUrls) {
+            console.log('getCommitById');
             if (gitHost === this.gitHubString) {
                 return this.getGitHubCommitById(selectedGitRepository, accessToken, commitSha, alreadyLinkedUrls);
             } else if (gitHost === this.gitLabString) {
@@ -372,6 +387,7 @@ define([
 
         // Get a commit from GitHub using it's SHA
         getGitHubCommitById: function (selectedGitRepository, accessToken, commitSha, alreadyLinkedUrls) {
+            console.log('getGitHubCommitById');
             var deferred = new Deferred();
             var repositoryUrl = new url(selectedGitRepository.url);
             var urlParts = this._getUrlPartsFromPath(repositoryUrl.path);
@@ -407,6 +423,7 @@ define([
 
         // Get a commit from GitLab using it's SHA
         getGitLabCommitById: function (selectedGitRepository, accessToken, commitSha, alreadyLinkedUrls) {
+            console.log('getGitLabCommitById');
             var deferred = new Deferred();
             var giturl = this._createUrlInformation(selectedGitRepository.url);
 
@@ -433,6 +450,7 @@ define([
         },
 
         getIssueById: function (selectedGitRepository, gitHost, accessToken, issueId, alreadyLinkedUrls) {
+            console.log('getIssueById');
             if (gitHost === this.gitHubString) {
                 return this.getGitHubIssueById(selectedGitRepository, accessToken, issueId, alreadyLinkedUrls);
             } else if (gitHost === this.gitLabString) {
@@ -446,6 +464,7 @@ define([
 
         // Get a GitHub issue by it's id (only if it's an issue, not a pull request)
         getGitHubIssueById: function (selectedGitRepository, accessToken, issueId, alreadyLinkedUrls) {
+            console.log('getGitHubIssueById');
             var self = this;
             var deferred = new Deferred();
             var repositoryUrl = new url(selectedGitRepository.url);
@@ -484,6 +503,7 @@ define([
 
         // Get a GitLab issue by it's id
         getGitLabIssueById: function (selectedGitRepository, accessToken, issueId, alreadyLinkedUrls) {
+            console.log('getGitLabIssueById');
             var deferred = new Deferred();
             var giturl = this._createUrlInformation(selectedGitRepository.url);
 
@@ -510,6 +530,7 @@ define([
 
         // Try to get a request by it's id
         getRequestById: function (selectedGitRepository, gitHost, accessToken, requestId, alreadyLinkedUrls) {
+            console.log('getRequestById');
             if (gitHost === this.gitHubString) {
                 return this.getGitHubRequestById(selectedGitRepository, accessToken, requestId, alreadyLinkedUrls);
             } else if (gitHost === this.gitLabString) {
@@ -522,6 +543,7 @@ define([
         },
 
         getGitHubRequestById: function (selectedGitRepository, accessToken, requestId, alreadyLinkedUrls) {
+            console.log('getGitHubRequestById');
             var self = this;
             var deferred = new Deferred();
             var repositoryUrl = new url(selectedGitRepository.url);
@@ -557,6 +579,7 @@ define([
         },
 
         getGitLabRequestById: function (selectedGitRepository, accessToken, requestId, alreadyLinkedUrls) {
+            console.log('getGitLabRequestById');
             var deferred = new Deferred();
             var giturl = this._createUrlInformation(selectedGitRepository.url);
 
@@ -583,6 +606,7 @@ define([
 
         // Get the last 100 commits from the specified repository on GitHub or GitLab
         getRecentCommits: function (selectedGitRepository, gitHost, accessToken, alreadyLinkedUrls) {
+            console.log('getRecentCommits');
             // Depending on how the returned objects look like, they may need to be converted
             // first so that the same property names are always used.
             if (gitHost === this.gitHubString) {
@@ -598,6 +622,7 @@ define([
 
         // Get the last 100 commits from the specified repository on GitHub
         getRecentGitHubCommits: function (selectedGitRepository, accessToken, alreadyLinkedUrls) {
+            console.log('getRecentGitHubCommits');
             var deferred = new Deferred();
             var repositoryUrl = new url(selectedGitRepository.url);
             var urlParts = this._getUrlPartsFromPath(repositoryUrl.path);
@@ -636,6 +661,7 @@ define([
 
         // this should really be extracted to a separate class
         _createUrlInformation: function(param) {
+            console.log('_createUrlInformation');
             var original = new url(param);
             var origin = this._getOriginFromUrlObject(original);
             // this should then call the revamped removegitending function
@@ -656,6 +682,7 @@ define([
 
         // Get the last 100 commits from the specified repository on GitLab
         getRecentGitLabCommits: function (selectedGitRepository, accessToken, alreadyLinkedUrls) {
+            console.log('getRecentGitLabCommits');
             var giturl = this._createUrlInformation(selectedGitRepository.url);
             var deferred = new Deferred();
 
@@ -687,6 +714,7 @@ define([
 
         // Get the last 100 issues form the specified repository on GitHub or GitLab
         getRecentIssues: function (selectedGitRepository, gitHost, accessToken, alreadyLinkedUrls) {
+            console.log('getRecentIssues');
             if (gitHost === this.gitHubString) {
                 return this.getRecentGitHubIssues(selectedGitRepository, accessToken, alreadyLinkedUrls);
             } else if (gitHost === this.gitLabString) {
@@ -700,6 +728,7 @@ define([
 
         // Get the last 100 issues from the specified repository on GitHub
         getRecentGitHubIssues: function (selectedGitRepository, accessToken, alreadyLinkedUrls) {
+            console.log('getRecentGitHubIssues');
             var self = this;
             var deferred = new Deferred();
             var repositoryUrl = new url(selectedGitRepository.url);
@@ -740,6 +769,7 @@ define([
 
         // Get the last 100 issues from the specified repository on GitLab
         getRecentGitLabIssues: function (selectedGitRepository, accessToken, alreadyLinkedUrls) {
+            console.log('getRecentGitLabIssues');
             var self = this;
             var giturl = this._createUrlInformation(selectedGitRepository.url);
             var deferred = new Deferred();
@@ -774,6 +804,7 @@ define([
 
         // Create a fake issue object used to create a new issue in GitHub or GitLab
         _createNewIssueElement: function (gitHost) {
+            console.log('_createNewIssueElement');
             return {
                 id: -1,
                 title: "Create a new issue in " + gitHost,
@@ -786,6 +817,7 @@ define([
 
         // Get the last 100 requests (pull/merge) from the selected repository on GitHub or GitLab
         getRecentRequests: function (selectedGitRepository, gitHost, accessToken, alreadyLinkedUrls) {
+            console.log('getRecentRequests');
             if (gitHost === this.gitHubString) {
                 return this.getRecentGitHubRequests(selectedGitRepository, accessToken, alreadyLinkedUrls);
             } else if (gitHost === this.gitLabString) {
@@ -799,6 +831,7 @@ define([
 
         // Get the last 100 pull requests from the selected repository on GitHub
         getRecentGitHubRequests: function (selectedGitRepository, accessToken, alreadyLinkedUrls) {
+            console.log('getRecentGitHubRequests');
             var deferred = new Deferred();
             var repositoryUrl = new url(selectedGitRepository.url);
             var urlParts = this._getUrlPartsFromPath(repositoryUrl.path);
@@ -837,6 +870,7 @@ define([
 
         // Get the last 100 merge requests from the selected repository on GitLab
         getRecentGitLabRequests: function (selectedGitRepository, accessToken, alreadyLinkedUrls) {
+            console.log('getRecentGitLabRequests');
             var giturl = this._createUrlInformation(selectedGitRepository.url);
             var deferred = new Deferred();
 
@@ -866,6 +900,7 @@ define([
         },
 
         determineRepositoryGitHost: function (selectedGitRepository) {
+            console.log('determineRepositoryGitHost');
             var self = this;
             var deferred = new Deferred();
             var repositoryUrl = new url(selectedGitRepository.url);
@@ -899,6 +934,7 @@ define([
         // Make a request for a single public project from the gitlab api.
         // Return true if the request was successful, otherwise false.
         isGitLabRepository: function (gitRepositoryUrl) {
+            console.log('isGitLabRepository');
             //return xhr.get(this._getOriginFromUrlObject(gitRepositoryUrl) + "/api/v4/projects", {
             var url = this._getOriginFromUrlObject(gitRepositoryUrl) + "/api/v4/projects?per_page=1";
             console.log(url);
@@ -919,6 +955,7 @@ define([
 
         // Check if the access token works for the specified host type
         checkAccessToken: function (gitRepositoryUrl, gitHost, accessToken) {
+            console.log('checkAccessToken');
             var deferred = new Deferred();
 
             if (gitHost === this.gitHubString) {
@@ -956,21 +993,25 @@ define([
 
         // Gets the origin without a trailing slash
         _getOriginFromUrlObject: function (url) {
+            console.log('_getOriginFromUrlObject');
             return url.scheme + "://" + url.host + (url.port ? ":" + url.port : "");
         },
 
         _formatUrlWithProxy: function (url) {
+            console.log('_formatUrlWithProxy');
             var proxyUrl = new URL(net.jazz.ajax._contextRoot + "/proxy?uri=", window.location.origin);
             return proxyUrl.href + encodeURIComponent(url);
         },
 
         // Remove the ".git" suffix from the repository name if present
         _removeDotGitEnding: function (repositoryName) {
+            console.log('_removeDotGitEnding');
             return repositoryName.replace(/\.git$/, '');
         },
 
         // Returns an array of non empty url parts taken from the specified url path
         _getUrlPartsFromPath: function (urlPath) {
+            console.log('_getUrlPartsFromPath');
             return urlPath.split('/').filter(function (part) {
                 return part; // Remove empty parts (initial slash).
             });
@@ -983,6 +1024,7 @@ define([
         // addressed in the future if there are repositories with a too high pull
         // requests to issues ratio.
         _removePullRequestsFromIssuesList: function (issues) {
+            console.log('_removePullRequestsFromIssuesList');
             return issues.filter(function (issue) {
                 return !issue.pull_request;
             });

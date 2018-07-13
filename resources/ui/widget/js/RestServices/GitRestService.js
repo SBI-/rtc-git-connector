@@ -122,7 +122,7 @@ define([
             tags = (tags.length) ? tags + ", " : tags;
             tags += "from-rtc-work-item";
 
-            var gitlab = new this.gitLabApi({
+            var gitlab = this.gitLabApi({
                 url: giturl.origin,
                 token: accessToken
             });
@@ -278,7 +278,7 @@ define([
             var deferredArray = [];
             var giturl = this._createUrlInformation(params.selectedGitRepository.url);
 
-            var gitlab = new this.gitLabApi({
+            var gitlab = this.gitLabApi({
                 url: giturl.origin,
                 token: params.accessToken
             });
@@ -410,7 +410,7 @@ define([
             var deferred = new Deferred();
             var giturl = this._createUrlInformation(selectedGitRepository.url);
 
-            var gitlab = new this.gitLabApi({
+            var gitlab = this.gitLabApi({
                 url: giturl.origin,
                 token: accessToken
             });
@@ -487,7 +487,7 @@ define([
             var deferred = new Deferred();
             var giturl = this._createUrlInformation(selectedGitRepository.url);
 
-            var gitlab = new this.gitLabApi({
+            var gitlab = this.gitLabApi({
                 url: giturl.origin,
                 token: accessToken
             });
@@ -560,7 +560,7 @@ define([
             var deferred = new Deferred();
             var giturl = this._createUrlInformation(selectedGitRepository.url);
 
-            var gitlab = new this.gitLabApi({
+            var gitlab = this.gitLabApi({
                 url: giturl.origin,
                 token: accessToken
             });
@@ -659,7 +659,7 @@ define([
             var giturl = this._createUrlInformation(selectedGitRepository.url);
             var deferred = new Deferred();
 
-            var gitlab = new this.gitLabApi({
+            var gitlab = this.gitLabApi({
                 url: giturl.origin,
                 token: accessToken
             });
@@ -744,7 +744,7 @@ define([
             var giturl = this._createUrlInformation(selectedGitRepository.url);
             var deferred = new Deferred();
 
-            var gitlab = new this.gitLabApi({
+            var gitlab = this.gitLabApi({
                 url: giturl.origin,
                 token: accessToken
             });
@@ -841,7 +841,7 @@ define([
             var giturl = this._createUrlInformation(selectedGitRepository.url);
             var deferred = new Deferred();
 
-            var gitlab = new this.gitLabApi({
+            var gitlab = this.gitLabApi({
                 url: giturl.origin,
                 token: accessToken
             });
@@ -939,7 +939,7 @@ define([
                 });
             } else if (gitHost === this.gitLabString) {
                 // Check access token with GitLab
-                var gitlab = new this.gitLabApi({
+                var gitlab = this.gitLabApi({
                     url: this._getOriginFromUrlObject(gitRepositoryUrl),
                     token: accessToken
                 });

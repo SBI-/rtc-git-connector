@@ -909,17 +909,20 @@ define([
         // Make a request for a single public project from the gitlab api.
         // Return true if the request was successful, otherwise false.
         isGitLabRepository: function (gitRepositoryUrl) {
-            return xhr.get(this._getOriginFromUrlObject(gitRepositoryUrl) + "/api/v4/projects", {
-                query: {
-                    per_page: 1
-                },
+            //return xhr.get(this._getOriginFromUrlObject(gitRepositoryUrl) + "/api/v4/projects", {
+            var url = this._getOriginFromUrlObject(gitRepositoryUrl) + "/api/v4/projects?per_page=1";
+            console.log(url);
+            return jazz.client.xhrGet({
+                url: url,
                 handleAs: "json",
                 headers: {
                     "Accept": "application/json"
                 }
             }).then(function (response) {
+                console.log("this is a gitlab repository");
                 return true;
             }, function (error) {
+                console.log("seems like this isn't everything that we need");
                 return false;
             });
         },
